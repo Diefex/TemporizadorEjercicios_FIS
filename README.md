@@ -7,8 +7,11 @@ Ejercicio de un temporizador para rutinas de ejercicio básico con orientación 
 
 Ejercicio realizado con python.
 
-
+#
 Universiad Distrital Francisco jose de Caldas
+
 Ingenieria de Sistemas
+
 Fundamentos de Ingenieria de Software
+
 Abril - 2021
