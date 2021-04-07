@@ -97,13 +97,13 @@ def run_timer_descanso():
 
 #Sonidos
 def sonar_suave():
-        pista_suave = "sounds/Beep_Short.mp3"
+        pista_suave = "sounds/short.mp3"
         print("sonando suave")
         playsound(pista_suave)
         
 
 def sonar_fuerte():
-        pista_fuerte = "sounds/Beep_Large.mp3"
+        pista_fuerte = "sounds/large.mp3"
         print("sonando fuerte")
         playsound(pista_fuerte)
 
