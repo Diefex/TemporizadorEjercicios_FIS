@@ -1,6 +1,9 @@
 from tkinter import Tk, Frame, Label, Entry, Button
+from playsound import playsound
 import time
 import tkinter
+import threading
+
 
 # Distribucion de ventana --------------------------
 
@@ -40,6 +43,7 @@ def iniciar():
 
         run_timer_ronda()
         
+        
 # Correr una ronda
 def run_timer_ronda():
     global t, t_ronda, n_ronda
@@ -47,17 +51,18 @@ def run_timer_ronda():
         w.grid_remove()
 
     if(t>0 and t<4):
-        print("sonido suave") # Espacio para funcion que reproduce un sonido suave
-
+        sonar_suave()
+        #print("sonidop suave") # Espacio para funcion que reproduce un sonido suave
     if(t == 0):
-        print("sonido fuerte") # Espacio para funcion que reproduce un sonido fuerte
-
+        sonar_fuerte()
+        #print("sonido fuerte") # Espacio para funcion que reproduce un sonido fuerte
+    
     Label(display, text="Ejercicio", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
     Label(display, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
-    
+
     if(t>0):
         t -= 1
-        ventana.after(1000, run_timer_ronda)
+        ventana.after(1000, run_timer_ronda)#ESTO DEBERIA SER UN HILO
     else:
         n_ronda -= 1
         t = t_descanso
@@ -73,9 +78,11 @@ def run_timer_descanso():
         w.grid_remove()
 
     if(t>0 and t<4):
+        sonar_suave()
         print("sonido suave") # Espacio para funcion que reproduce un sonido suave
 
     if(t == 0):
+        sonar_fuerte()
         print("sonido fuerte") # Espacio para funcion que reproduce un sonido fuerte
 
     Label(display, text="Descanso", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
@@ -87,6 +94,18 @@ def run_timer_descanso():
     else:
         t = t_ronda
         ventana.after(1000, run_timer_ronda)
+
+#Sonidos
+def sonar_suave():
+        pista_suave = "sounds/iguana.mp3"
+        print("sonando suave")
+        playsound(pista_suave)
+        
+
+def sonar_fuerte():
+        pista_fuerte = "sounds/komodo.mp3"
+        print("sonando fuerte")
+        playsound(pista_fuerte)
 
 # Ventana de terminacion --------------------------
 
