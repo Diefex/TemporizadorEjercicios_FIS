@@ -10,10 +10,10 @@ Ejercicio realizado con python.
 
 ---
 
-### Universiad Distrital Francisco jose de Caldas
+### Universiad Distrital Francisco José de Caldas
 
-### Ingenieria de Sistemas
+### Ingeniería de Sistemas
 
-### Fundamentos de Ingenieria de Software
+### Fundamentos de Ingeniería de Software
 
-### Abril - 2021
+### 07 Abril - 2021
