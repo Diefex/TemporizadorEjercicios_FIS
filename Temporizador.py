@@ -1,8 +1,7 @@
-from tkinter import Tk, Frame, Label, Entry, Button
+from tkinter import Tk, Frame, Label, Entry, Button, RIGHT
+from time import strftime, gmtime
+from threading import Thread
 from playsound import playsound
-import time
-import tkinter
-import threading
 
 
 # Distribucion de ventana --------------------------
@@ -51,8 +50,8 @@ def run_timer_ronda():
     for w in display.winfo_children():
         w.grid_remove()
 
-    h_sonido_suave = threading.Thread(target=sonar_suave)
-    h_sonido_fuerte = threading.Thread(target=sonar_fuerte)
+    h_sonido_suave = Thread(target=sonar_suave)
+    h_sonido_fuerte = Thread(target=sonar_fuerte)
 
     if(t>0 and t<4):
         h_sonido_suave.start()
@@ -60,12 +59,12 @@ def run_timer_ronda():
     if(t == 0):
         h_sonido_fuerte.start()
     
-    Label(display, text="Ejercicio", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
-    Label(display, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
+    Label(display, text="Ronda "+str(n_ronda), bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
+    Label(display, text=strftime("%H:%M:%S", gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
 
     if(t>0):
         t -= 1
-        ventana.after(1000, run_timer_ronda)#ESTO DEBERIA SER UN HILO
+        ventana.after(1000, run_timer_ronda)
     else:
         n_ronda -= 1
         t = t_descanso
@@ -81,8 +80,8 @@ def run_timer_descanso():
     for w in display.winfo_children():
         w.grid_remove()
 
-    h_sonido_suave = threading.Thread(target=sonar_suave)
-    h_sonido_fuerte = threading.Thread(target=sonar_fuerte)
+    h_sonido_suave = Thread(target=sonar_suave)
+    h_sonido_fuerte = Thread(target=sonar_fuerte)
 
     if(t>0 and t<4):
         h_sonido_suave.start()
@@ -91,7 +90,7 @@ def run_timer_descanso():
         h_sonido_fuerte.start()
 
     Label(display, text="Descanso", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
-    Label(display, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
+    Label(display, text=strftime("%H:%M:%S", gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
     
     if(t>0):
         t -= 1
@@ -103,13 +102,11 @@ def run_timer_descanso():
 #Sonidos
 def sonar_suave():
         pista_suave = "sounds/short.mp3"
-        print("sonando suave")
         playsound(pista_suave)
         
 
 def sonar_fuerte():
         pista_fuerte = "sounds/large.mp3"
-        print("sonando fuerte")
         playsound(pista_fuerte)
 
 # Ventana de terminacion --------------------------
@@ -118,7 +115,7 @@ def terminar():
     for w in display.winfo_children():
         w.grid_remove()
     
-    Label(display, text="Felicitaciones!", bg="#1d2e42", fg="white", font=("Arial", 30, "bold")).grid(row=0, column=0)
+    Label(display, text="¡Felicitaciones!", bg="#1d2e42", fg="white", font=("Arial", 30, "bold")).grid(row=0, column=0)
     Label(display, text="Has terminado todas las rondas", bg="#1d2e42", fg="white", font=("Arial", 20, "bold")).grid(row=1, column=0)
 
     Button(fondo, text="Continuar", command=init, relief="flat", bg="#e67f22", fg="white", font=("Arial", 14, "bold")).grid(row=2, column=0)
@@ -129,7 +126,7 @@ def terminar():
 # Entrada de numero de rondas
 disp_n_rondas = Frame(display, bg="#1d2e42")
 Label(disp_n_rondas, text="Numero de\nrondas", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2)
-entry_n_ronda = Entry(disp_n_rondas, font=("Arial", 12, "bold"), width=4)
+entry_n_ronda = Entry(disp_n_rondas, font=("Arial", 12, "bold"), width=4, justify=RIGHT)
 entry_n_ronda.grid(row=1, column=0, sticky="e")
 entry_n_ronda.insert(0, "5")
 Label(disp_n_rondas, text="Rondas", bg="#1d2e42", fg="white", font=("Arial", 12, "bold")).grid(row=1, column=1, sticky="w")
@@ -137,7 +134,7 @@ Label(disp_n_rondas, text="Rondas", bg="#1d2e42", fg="white", font=("Arial", 12,
 # Entrada de tiempo de cada ronda
 disp_t_ejercicio = Frame(display, bg="#1d2e42")
 Label(disp_t_ejercicio, text="Duracion de\ncada ronda", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2)
-entry_t_ronda = Entry(disp_t_ejercicio, font=("Arial", 12, "bold"), width=4)
+entry_t_ronda = Entry(disp_t_ejercicio, font=("Arial", 12, "bold"), width=4, justify=RIGHT)
 entry_t_ronda.grid(row=1, column=0, sticky="e")
 entry_t_ronda.insert(0, "20")
 Label(disp_t_ejercicio, text="Seg.", bg="#1d2e42", fg="white", font=("Arial", 12, "bold")).grid(row=1, column=1, sticky="w")
@@ -145,7 +142,7 @@ Label(disp_t_ejercicio, text="Seg.", bg="#1d2e42", fg="white", font=("Arial", 12
 # Entrada de tiempo de cada descanso
 disp_t_descanso = Frame(display, bg="#1d2e42")
 Label(disp_t_descanso, text="Duracion del\ndescanso", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2)
-entry_t_descanso = Entry(disp_t_descanso, font=("Arial", 12, "bold"), width=4, justify=tkinter.RIGHT)
+entry_t_descanso = Entry(disp_t_descanso, font=("Arial", 12, "bold"), width=4, justify=RIGHT)
 entry_t_descanso.grid(row=1, column=0, sticky="e")
 entry_t_descanso.insert(0, "10")
 Label(disp_t_descanso, text="Seg.", bg="#1d2e42", fg="white", font=("Arial", 12, "bold")).grid(row=1, column=1, sticky="w")
