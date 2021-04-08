@@ -47,15 +47,18 @@ def iniciar():
 # Correr una ronda
 def run_timer_ronda():
     global t, t_ronda, n_ronda
+
     for w in display.winfo_children():
         w.grid_remove()
 
+    h_sonido_suave = threading.Thread(target=sonar_suave)
+    h_sonido_fuerte = threading.Thread(target=sonar_fuerte)
+
     if(t>0 and t<4):
-        sonar_suave()
-        #print("sonidop suave") # Espacio para funcion que reproduce un sonido suave
+        h_sonido_suave.start()
+        
     if(t == 0):
-        sonar_fuerte()
-        #print("sonido fuerte") # Espacio para funcion que reproduce un sonido fuerte
+        h_sonido_fuerte.start()
     
     Label(display, text="Ejercicio", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
     Label(display, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
@@ -74,16 +77,18 @@ def run_timer_ronda():
 # Correr un descanso
 def run_timer_descanso():
     global t, t_ronda
+
     for w in display.winfo_children():
         w.grid_remove()
 
-    if(t>0 and t<4):
-        sonar_suave()
-        print("sonido suave") # Espacio para funcion que reproduce un sonido suave
+    h_sonido_suave = threading.Thread(target=sonar_suave)
+    h_sonido_fuerte = threading.Thread(target=sonar_fuerte)
 
+    if(t>0 and t<4):
+        h_sonido_suave.start()
+        
     if(t == 0):
-        sonar_fuerte()
-        print("sonido fuerte") # Espacio para funcion que reproduce un sonido fuerte
+        h_sonido_fuerte.start()
 
     Label(display, text="Descanso", bg="#1d2e42", fg="white", font=("Arial", 16, "bold")).grid(row=0, column=0)
     Label(display, text=time.strftime("%H:%M:%S", time.gmtime(t)), bg="#1d2e42", fg="white", font=("Arial", 36, "bold")).grid(row=1, column=0)
