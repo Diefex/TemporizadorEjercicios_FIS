@@ -8,6 +8,10 @@ Ejercicio de un temporizador para rutinas de ejercicio básico con orientación 
 
 Ejercicio realizado con python.
 
+__Dependencias__:
+
+- <code> pip install playsound </code>
+
 ---
 
 ### Universiad Distrital Francisco José de Caldas
